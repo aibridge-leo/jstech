@@ -349,78 +349,9 @@
             style="background:radial-gradient(closest-side,rgba(124,197,118,.35),rgba(91,185,217,.18) 55%,transparent 70%)">
           </div>
 
-          <!-- Geometric composition -->
-          <svg viewBox="0 0 520 624" class="relative w-full h-full" aria-label="JS TECH 다이아몬드 기하 그래픽">
-            <defs>
-              <linearGradient id="heroLine" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#1B3F8B" stop-opacity=".15" />
-                <stop offset="1" stop-color="#5BB9D9" stop-opacity=".0" />
-              </linearGradient>
-              <linearGradient id="heroDiamond" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#7CC576" />
-                <stop offset="100%" stop-color="#5BB9D9" />
-              </linearGradient>
-            </defs>
-
-            <!-- background circle frame -->
-            <circle cx="260" cy="312" r="240" fill="none" stroke="url(#heroLine)" stroke-width="1.5" />
-            <circle cx="260" cy="312" r="180" fill="none" stroke="url(#heroLine)" stroke-width="1.5" />
-            <circle cx="260" cy="312" r="120" fill="none" stroke="#E6ECF3" stroke-width="1" />
-
-            <!-- diamond grid ring (slow spin) -->
-            <g class="spin-slow">
-              <g transform="translate(260 312)">
-                <g>
-                  <rect x="-12" y="-272" width="24" height="24" transform="rotate(45)" fill="#1B3F8B" opacity=".85" />
-                  <rect x="248" y="-12" width="24" height="24" transform="rotate(45)" fill="url(#heroDiamond)" />
-                  <rect x="-12" y="248" width="24" height="24" transform="rotate(45)" fill="#1B3F8B" opacity=".25" />
-                  <rect x="-272" y="-12" width="24" height="24" transform="rotate(45)" fill="url(#heroDiamond)"
-                    opacity=".6" />
-                  <!-- mid ring small dots -->
-                  <g fill="#1B3F8B" opacity=".35">
-                    <circle cx="170" cy="-90" r="3" />
-                    <circle cx="90" cy="170" r="3" />
-                    <circle cx="-170" cy="90" r="3" />
-                    <circle cx="-90" cy="-170" r="3" />
-                  </g>
-                </g>
-              </g>
-            </g>
-
-            <!-- center large diamond mark -->
-            <g class="drift" transform="translate(260 312)">
-              <g>
-                <rect x="-110" y="-110" width="220" height="220" transform="rotate(45)" fill="url(#heroDiamond)" />
-                <!-- inner shading -->
-                <rect x="-110" y="-110" width="220" height="220" transform="rotate(45)" fill="url(#heroLine)" />
-                <!-- highlight stripe -->
-                <rect x="-110" y="-110" width="220" height="40" transform="rotate(45)" fill="rgba(255,255,255,.25)" />
-                <!-- inner outline diamond -->
-                <rect x="-72" y="-72" width="144" height="144" transform="rotate(45)" fill="none"
-                  stroke="rgba(255,255,255,.55)" stroke-width="1.4" />
-                <!-- tiny inner diamond -->
-                <rect x="-22" y="-22" width="44" height="44" transform="rotate(45)" fill="white" opacity=".95" />
-                <rect x="-10" y="-10" width="20" height="20" transform="rotate(45)" fill="url(#heroDiamond)" />
-              </g>
-            </g>
-
-            <!-- floating side diamonds -->
-            <g transform="translate(80 90)">
-              <rect x="-10" y="-10" width="20" height="20" transform="rotate(45)" fill="#1B3F8B" />
-            </g>
-            <g transform="translate(450 540)">
-              <rect x="-8" y="-8" width="16" height="16" transform="rotate(45)" fill="url(#heroDiamond)" />
-            </g>
-            <g transform="translate(450 110)">
-              <rect x="-6" y="-6" width="12" height="12" transform="rotate(45)" fill="#1B3F8B" opacity=".5" />
-            </g>
-
-            <!-- corner mono caption -->
-            <text x="20" y="600" font-family="Inter, monospace" font-size="11" fill="#1B3F8B" opacity=".55"
-              letter-spacing="2">
-              EST. JS TECH · PRECISION CLEANING
-            </text>
-          </svg>
+          <!-- Hero image -->
+          <img src="assets/KakaoTalk_20260515_160940479.png" alt="JS TECH 친환경 진공 초음파 세정 시스템"
+            class="relative w-full h-full object-cover rounded-2xl shadow-card" />
 
           <!-- Tag card overlay -->
           <div
