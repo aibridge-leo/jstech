@@ -202,6 +202,147 @@
       background: linear-gradient(135deg, rgba(124, 197, 118, .16), rgba(91, 185, 217, .16));
     }
 
+
+    /* ===== Motion graphics additions ===== */
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0;
+      z-index: 60;
+      transform-origin: 0 50%;
+      transition: width .1s linear;
+    }
+
+    /* word-by-word headline */
+    .wsplit .wd {
+      display: inline-block;
+      opacity: 0;
+      filter: blur(10px);
+      transition: opacity .5s cubic-bezier(.2, .7, .2, 1), filter .5s cubic-bezier(.2, .7, .2, 1);
+    }
+
+    .wsplit.in .wd {
+      opacity: 1;
+      filter: blur(0);
+    }
+
+    /* cleaning scan sweep over an image */
+    .scan-host {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scan-line {
+      position: absolute;
+      left: -10%;
+      width: 120%;
+      height: 42%;
+      top: -45%;
+      pointer-events: none;
+      background: linear-gradient(to bottom, rgba(91, 185, 217, 0) 0%, rgba(91, 185, 217, .18) 62%, rgba(255, 255, 255, .55) 86%, rgba(91, 185, 217, .9) 92%, rgba(91, 185, 217, 0) 100%);
+      mix-blend-mode: screen;
+    }
+
+    .scan-host.sweep .scan-line {
+      animation: scan 2.6s cubic-bezier(.45, .05, .3, 1) 1 both;
+    }
+
+    @keyframes scan {
+      from {
+        top: -45%
+      }
+
+      to {
+        top: 103%
+      }
+    }
+
+    /* business card hover */
+    .biz-img {
+      transition: transform 1.1s cubic-bezier(.2, .7, .2, 1);
+    }
+
+    .group:hover .biz-img {
+      transform: scale(1.07);
+    }
+
+    /* strengths icon line-draw */
+    .draw path,
+    .draw circle {
+      stroke-dasharray: var(--len, 120);
+      stroke-dashoffset: var(--len, 120);
+      transition: stroke-dashoffset 1.1s cubic-bezier(.3, .7, .2, 1);
+    }
+
+    .draw.in path,
+    .draw.in circle {
+      stroke-dashoffset: 0;
+    }
+
+    /* how-it-works */
+    .hiw-step {
+      position: relative;
+      padding-top: 18px;
+      transition: color .45s ease;
+      color: var(--muted);
+    }
+
+    .hiw-step::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--line);
+    }
+
+    .hiw-step::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #1B3F8B, #5BB9D9);
+    }
+
+    .hiw-step.on {
+      color: var(--ink);
+    }
+
+    .hiw-step.on::after {
+      width: 100%;
+      transition: width .6s linear;
+    }
+
+    .hiw-step .num {
+      font-weight: 800;
+      color: var(--brand-cyan);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .wsplit .wd {
+        opacity: 1;
+        filter: none;
+        transition: none
+      }
+
+      .scan-host.sweep .scan-line {
+        animation: none;
+        display: none
+      }
+
+      .drift,
+      .spin-slow,
+      .scroll-cue {
+        animation: none
+      }
+    }
+
     /* Nav blur */
     .nav-glass {
       background: rgba(255, 255, 255, .78);
@@ -248,6 +389,8 @@
     </defs>
   </svg>
 
+  <div id="progress-bar" class="hairline-gradient" aria-hidden="true"></div>
+
   <!-- ============ Navigation ============ -->
   <header class="fixed top-0 inset-x-0 z-50 nav-glass">
     <nav aria-label="주 메뉴" class="max-w-[1240px] mx-auto px-6 lg:px-10 h-[68px] flex items-center justify-between">
@@ -256,6 +399,7 @@
       </a>
       <ul class="hidden md:flex items-center gap-9 text-[14.5px] font-medium text-ink/80">
         <li><a href="#about" class="hover:text-navy transition-colors">회사소개</a></li>
+        <li><a href="#process" class="hover:text-navy transition-colors">세정 원리</a></li>
         <li><a href="#business" class="hover:text-navy transition-colors">사업영역</a></li>
         <li><a href="#strengths" class="hover:text-navy transition-colors">핵심강점</a></li>
         <li><a href="#contact" class="hover:text-navy transition-colors">오시는 길</a></li>
@@ -281,6 +425,8 @@
       <div
         class="absolute inset-0 bg-grid opacity-60 [mask-image:radial-gradient(ellipse_at_60%_30%,#000_30%,transparent_70%)]">
       </div>
+      <!-- live cavitation field -->
+      <canvas id="heroField" class="absolute inset-0 w-full h-full"></canvas>
     </div>
 
     <div
@@ -296,7 +442,7 @@
         </div>
 
         <h1
-          class="reveal reveal-d1 mt-6 text-[clamp(36px,6vw,72px)] leading-[1.08] tracking-[-0.02em] font-extrabold text-navy">
+          class="reveal reveal-d1 wsplit mt-6 text-[clamp(36px,6vw,72px)] leading-[1.08] tracking-[-0.02em] font-extrabold text-navy">
           기술로 가치를 잇다.
           <span class="block mt-2 text-ink">깨끗한 기술이 <br class="hidden sm:block" />정밀한 미래를 만듭니다.</span>
         </h1>
@@ -350,8 +496,11 @@
           </div>
 
           <!-- Hero image -->
-          <img src="assets/KakaoTalk_20260515_160940479.png" alt="JS TECH 친환경 진공 초음파 세정 시스템"
-            class="relative w-full h-full object-cover rounded-2xl shadow-card" />
+          <div class="scan-host relative w-full h-full rounded-2xl shadow-card overflow-hidden" data-scan-loop="5200">
+            <img src="assets/KakaoTalk_20260515_160940479.png" alt="JS TECH 친환경 진공 초음파 세정 시스템"
+              class="block w-full h-full object-cover" />
+            <div class="scan-line" aria-hidden="true"></div>
+          </div>
 
           <!-- Tag card overlay -->
           <div
@@ -392,8 +541,11 @@
             class="absolute -top-6 -left-6 w-24 h-24 rounded-2xl rotate-12 grad-diamond opacity-90"></div>
           <div class="relative rounded-2xl overflow-hidden border border-line shadow-card">
             <!-- Placeholder factory/cleanroom imagery -->
-            <img src="assets/about-cleanroom.jpg" alt="JS TECH 클린룸 진공 초음파 세정 설비"
-              class="block w-full h-[460px] object-cover" loading="lazy" />
+            <div class="scan-host" data-scan-once="1">
+              <img src="assets/about-cleanroom.jpg" alt="JS TECH 클린룸 진공 초음파 세정 설비"
+                class="block w-full h-[460px] object-cover" loading="lazy" />
+              <div class="scan-line" aria-hidden="true"></div>
+            </div>
             <div aria-hidden="true"
               class="absolute inset-0 bg-gradient-to-t from-navy/30 via-transparent to-transparent"></div>
             <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between text-white">
@@ -458,6 +610,60 @@
     </div>
   </section>
 
+
+  <!-- ============ How it works (animated process diagram) ============ -->
+  <section id="process" data-screen-label="03 Process" class="section bg-mist relative overflow-hidden">
+    <div aria-hidden="true"
+      class="absolute inset-0 bg-grid opacity-50 [mask-image:radial-gradient(ellipse_at_50%_0%,#000_25%,transparent_72%)]">
+    </div>
+
+    <div class="relative max-w-[1240px] mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-12 gap-10 items-end">
+        <div class="lg:col-span-7">
+          <div class="reveal flex items-center gap-3 text-[12.5px] tracking-[.18em] uppercase text-muted">
+            <span class="hairline-gradient inline-block w-10 h-[2px] rounded-full"></span>
+            How It Works
+          </div>
+          <h2
+            class="reveal reveal-d1 wsplit mt-4 text-[clamp(28px,3.4vw,44px)] leading-[1.18] tracking-[-0.015em] font-extrabold text-navy">
+            진공 속 파동이<br />보이지 않는 오염을 걷어냅니다.
+          </h2>
+        </div>
+        <p class="reveal reveal-d2 lg:col-span-5 text-[15.5px] leading-[1.85] text-muted">
+          챔버를 진공으로 낮춰 액이 좁은 틈까지 들어가게 한 뒤, 초음파로 만든 미세 기포가
+          표면에서 터지며 잔류 가공유와 미립자를 떼어냅니다.
+        </p>
+      </div>
+
+      <div class="reveal reveal-d1 mt-12 bg-white border border-line rounded-2xl shadow-soft overflow-hidden">
+        <canvas id="procCanvas" class="block w-full" style="height:clamp(320px,38vw,460px)"></canvas>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6 px-6 sm:px-8 pb-8 pt-2 text-[14px]">
+          <div class="hiw-step" data-step="0">
+            <div class="text-[12px] tracking-[.2em] uppercase"><span class="num">01</span> &nbsp;Vacuum</div>
+            <div class="mt-1.5 font-semibold text-[15px]">진공 감압</div>
+            <p class="mt-1 text-[13.5px] leading-[1.7] text-muted">챔버 압력을 낮춰 세정액이 미세 틈까지 침투</p>
+          </div>
+          <div class="hiw-step" data-step="1">
+            <div class="text-[12px] tracking-[.2em] uppercase"><span class="num">02</span> &nbsp;Ultrasonic</div>
+            <div class="mt-1.5 font-semibold text-[15px]">초음파 캐비테이션</div>
+            <p class="mt-1 text-[13.5px] leading-[1.7] text-muted">진동자가 만든 미세 기포가 표면에서 붕괴</p>
+          </div>
+          <div class="hiw-step" data-step="2">
+            <div class="text-[12px] tracking-[.2em] uppercase"><span class="num">03</span> &nbsp;Separation</div>
+            <div class="mt-1.5 font-semibold text-[15px]">오염 분리·배출</div>
+            <p class="mt-1 text-[13.5px] leading-[1.7] text-muted">떨어진 가공유와 미립자를 순환 여과로 배출</p>
+          </div>
+          <div class="hiw-step" data-step="3">
+            <div class="text-[12px] tracking-[.2em] uppercase"><span class="num">04</span> &nbsp;Dry &amp; Check</div>
+            <div class="mt-1.5 font-semibold text-[15px]">건조·청정도 확인</div>
+            <p class="mt-1 text-[13.5px] leading-[1.7] text-muted">진공 건조 후 DYNE·잔류물 기준으로 검사</p>
+          </div>
+        </div>
+      </div>
+      <p class="mt-4 text-[12.5px] text-muted">※ 위 도식은 공정 이해를 돕기 위한 개념도이며, 실제 설비 구성은 고객 공정에 따라 달라집니다.</p>
+    </div>
+  </section>
+
   <!-- ============ Business Areas ============ -->
   <section id="business" data-screen-label="03 Business" class="section bg-mist relative overflow-hidden">
     <div aria-hidden="true"
@@ -486,7 +692,7 @@
         <article
           class="reveal reveal-d1 group relative bg-white border border-line rounded-2xl shadow-soft hover:shadow-card transition-shadow overflow-hidden flex flex-col">
           <div class="relative aspect-[4/3] overflow-hidden bg-navy/5">
-            <img src="assets/biz-battery.png" alt="2차 전지 세정 · Secondary Battery" class="w-full h-full object-cover"
+            <img src="assets/biz-battery.png" alt="2차 전지 세정 · Secondary Battery" class="biz-img w-full h-full object-cover"
               loading="lazy" />
           </div>
           <div class="p-6 flex-1 flex flex-col">
@@ -505,7 +711,7 @@
         <article
           class="reveal reveal-d2 group relative bg-white border border-line rounded-2xl shadow-soft hover:shadow-card transition-shadow overflow-hidden flex flex-col">
           <div class="relative aspect-[4/3] overflow-hidden bg-navy/5">
-            <img src="assets/biz-semiconductor.jpg" alt="반도체 세정 · Semiconductor" class="w-full h-full object-cover"
+            <img src="assets/biz-semiconductor.jpg" alt="반도체 세정 · Semiconductor" class="biz-img w-full h-full object-cover"
               loading="lazy" />
           </div>
           <div class="p-6 flex-1 flex flex-col">
@@ -524,7 +730,7 @@
         <article
           class="reveal reveal-d3 group relative bg-white border border-line rounded-2xl shadow-soft hover:shadow-card transition-shadow overflow-hidden flex flex-col">
           <div class="relative aspect-[4/3] overflow-hidden bg-navy/5">
-            <img src="assets/biz-automotive.png" alt="자동차 부품 세정 · Automotive" class="w-full h-full object-cover"
+            <img src="assets/biz-automotive.png" alt="자동차 부품 세정 · Automotive" class="biz-img w-full h-full object-cover"
               loading="lazy" />
           </div>
           <div class="p-6 flex-1 flex flex-col">
@@ -573,7 +779,7 @@
           </div>
           <!-- icon -->
           <div class="mt-5 w-12 h-12 rounded-xl grid place-items-center bg-mist">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <svg class="draw" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M12 2.5c3 4 5.5 7 5.5 10.5a5.5 5.5 0 1 1-11 0C6.5 9.5 9 6.5 12 2.5Z" stroke="#1B3F8B"
                 stroke-width="1.6" stroke-linejoin="round" />
               <circle cx="12" cy="13" r="2" fill="url(#diamondGrad)" />
@@ -593,7 +799,7 @@
             <span class="h-px flex-1 bg-line"></span>
           </div>
           <div class="mt-5 w-12 h-12 rounded-xl grid place-items-center bg-mist">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <svg class="draw" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M12 3 4 6v6c0 4.5 3.4 7.7 8 9 4.6-1.3 8-4.5 8-9V6l-8-3Z" stroke="#1B3F8B" stroke-width="1.6"
                 stroke-linejoin="round" />
               <path d="m8.5 12.5 2.5 2.5L15.5 10" stroke="url(#diamondGrad)" stroke-width="1.8" stroke-linecap="round"
@@ -614,7 +820,7 @@
             <span class="h-px flex-1 bg-line"></span>
           </div>
           <div class="mt-5 w-12 h-12 rounded-xl grid place-items-center bg-mist">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <svg class="draw" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <circle cx="12" cy="12" r="3" fill="url(#diamondGrad)" />
               <path
                 d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M5.2 18.8l2.1-2.1M16.7 7.3l2.1-2.1"
@@ -635,7 +841,7 @@
             <span class="h-px flex-1 bg-line"></span>
           </div>
           <div class="mt-5 w-12 h-12 rounded-xl grid place-items-center bg-mist">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <svg class="draw" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M3 12a9 9 0 0 1 9-9M21 12a9 9 0 0 1-9 9" stroke="#1B3F8B" stroke-width="1.6"
                 stroke-linecap="round" />
               <path d="M12 7v5l3 2" stroke="url(#diamondGrad)" stroke-width="1.8" stroke-linecap="round" />
@@ -653,22 +859,22 @@
       <div
         class="reveal mt-12 grid grid-cols-2 lg:grid-cols-4 gap-px bg-line rounded-2xl overflow-hidden border border-line">
         <div class="bg-white p-6">
-          <div class="font-num text-[34px] font-extrabold text-navy leading-none">99.9<span
+          <div class="font-num text-[34px] font-extrabold text-navy leading-none" data-count="99.9" data-dec="1">0<span
               class="text-grad text-[24px]">%</span></div>
           <div class="mt-2 text-[13px] text-muted">평균 세정 청정도 달성률</div>
         </div>
         <div class="bg-white p-6">
-          <div class="font-num text-[34px] font-extrabold text-navy leading-none">15<span
+          <div class="font-num text-[34px] font-extrabold text-navy leading-none" data-count="15">0<span
               class="text-grad text-[24px]">+</span></div>
           <div class="mt-2 text-[13px] text-muted">현장 엔지니어링 경력 (年)</div>
         </div>
         <div class="bg-white p-6">
-          <div class="font-num text-[34px] font-extrabold text-navy leading-none">3<span class="text-grad text-[24px]">대
+          <div class="font-num text-[34px] font-extrabold text-navy leading-none" data-count="3">0<span class="text-grad text-[24px]">대
               산업</span></div>
           <div class="mt-2 text-[13px] text-muted">반도체 · 자동차 · 2차전지</div>
         </div>
         <div class="bg-white p-6">
-          <div class="font-num text-[34px] font-extrabold text-navy leading-none">24<span
+          <div class="font-num text-[34px] font-extrabold text-navy leading-none" data-count="24">0<span
               class="text-grad text-[24px]">/7</span></div>
           <div class="mt-2 text-[13px] text-muted">고객 라인 대응 체계</div>
         </div>
@@ -918,6 +1124,7 @@
         <div class="text-[12px] tracking-[.18em] uppercase text-white/50">Company</div>
         <ul class="mt-4 space-y-2 text-[14px]">
           <li><a href="#about" class="text-white/85 hover:text-white">회사소개</a></li>
+          <li><a href="#process" class="text-white/85 hover:text-white">세정 원리</a></li>
           <li><a href="#business" class="text-white/85 hover:text-white">사업영역</a></li>
           <li><a href="#strengths" class="text-white/85 hover:text-white">핵심강점</a></li>
           <li><a href="#contact" class="text-white/85 hover:text-white">오시는 길</a></li>
@@ -964,6 +1171,336 @@
         }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
         document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
       })();
+  </script>
+
+  <!-- ============ Motion graphics (scroll + canvas, no click handlers) ============ -->
+  <script>
+    (function () {
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var NAVY = '#1B3F8B', CYAN = '#5BB9D9', GREEN = '#7CC576';
+
+      /* ---------- scroll progress ---------- */
+      var bar = document.getElementById('progress-bar');
+      function onScroll() {
+        var h = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      /* ---------- headline: split into words ---------- */
+      document.querySelectorAll('.wsplit').forEach(function (el) {
+        (function walk(node) {
+          Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+            if (n.nodeType === 3 && n.textContent.trim()) {
+              var frag = document.createDocumentFragment();
+              n.textContent.split(/(\s+)/).forEach(function (part) {
+                if (!part.trim()) { frag.appendChild(document.createTextNode(part)); return; }
+                var sp = document.createElement('span');
+                sp.className = 'wd';
+                sp.textContent = part;
+                frag.appendChild(sp);
+              });
+              node.replaceChild(frag, n);
+            } else if (n.nodeType === 1) { walk(n); }
+          });
+        })(el);
+        el.querySelectorAll('.wd').forEach(function (w, i) { w.style.transitionDelay = (0.06 * i) + 's'; });
+      });
+
+      /* ---------- generic in-view observer ---------- */
+      function inView(sel, cb, opts) {
+        var els = document.querySelectorAll(sel);
+        if (!('IntersectionObserver' in window)) { els.forEach(function (e) { cb(e, true); }); return; }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) { cb(e.target, e.isIntersecting, io); });
+        }, opts || { threshold: 0.2 });
+        els.forEach(function (e) { io.observe(e); });
+      }
+
+      inView('.wsplit', function (el, vis, io) { if (vis) { el.classList.add('in'); io && io.unobserve(el); } },
+        { threshold: 0.25 });
+
+      /* ---------- strengths icons: measure then draw ---------- */
+      document.querySelectorAll('.draw').forEach(function (svg) {
+        svg.querySelectorAll('path, circle').forEach(function (p) {
+          var len = 120;
+          try { if (p.getTotalLength) { len = Math.ceil(p.getTotalLength()) || 120; } } catch (e) { }
+          p.style.setProperty('--len', len);
+        });
+      });
+      inView('.draw', function (el, vis, io) { if (vis) { el.classList.add('in'); io && io.unobserve(el); } },
+        { threshold: 0.4 });
+
+      /* ---------- cleaning scan sweeps ---------- */
+      if (!reduce) {
+        inView('[data-scan-once]', function (el, vis, io) {
+          if (vis) { el.classList.add('sweep'); io && io.unobserve(el); }
+        }, { threshold: 0.35 });
+
+        document.querySelectorAll('[data-scan-loop]').forEach(function (el) {
+          var period = parseInt(el.getAttribute('data-scan-loop'), 10) || 5200, visible = false, timer;
+          function fire() {
+            if (!visible) return;
+            el.classList.remove('sweep');
+            void el.offsetWidth;
+            el.classList.add('sweep');
+            timer = setTimeout(fire, period);
+          }
+          if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (es) {
+              es.forEach(function (e) {
+                visible = e.isIntersecting;
+                clearTimeout(timer);
+                if (visible) { timer = setTimeout(fire, 900); }
+              });
+            }, { threshold: 0.3 }).observe(el);
+          }
+        });
+      }
+
+      /* ---------- KPI count-up ---------- */
+      inView('[data-count]', function (el, vis, io) {
+        if (!vis) return;
+        io && io.unobserve(el);
+        var target = parseFloat(el.getAttribute('data-count'));
+        var dec = parseInt(el.getAttribute('data-dec') || '0', 10);
+        var first = el.firstChild;
+        if (reduce) { first.textContent = target.toFixed(dec); return; }
+        var t0 = null, dur = 1400;
+        function step(t) {
+          if (t0 === null) t0 = t;
+          var k = Math.min(1, (t - t0) / dur);
+          var e = 1 - Math.pow(1 - k, 3);
+          first.textContent = (target * e).toFixed(dec);
+          if (k < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }, { threshold: 0.6 });
+
+      /* ---------- canvas helpers ---------- */
+      function fit(cv) {
+        var r = cv.getBoundingClientRect(), d = Math.min(2, window.devicePixelRatio || 1);
+        cv.width = Math.max(1, Math.round(r.width * d));
+        cv.height = Math.max(1, Math.round(r.height * d));
+        var ctx = cv.getContext('2d');
+        ctx.setTransform(d, 0, 0, d, 0, 0);
+        return { w: r.width, h: r.height, ctx: ctx };
+      }
+      function rng(seed) {
+        return function () { seed = (seed * 1664525 + 1013904223) % 4294967296; return seed / 4294967296; };
+      }
+      function loop(cv, draw) {
+        var vis = false, raf = null, t0 = performance.now();
+        function frame(t) { draw(Math.max(0, (t - t0) / 1000)); raf = requestAnimationFrame(frame); }
+        function on() { if (!raf) { t0 = performance.now() - 0; raf = requestAnimationFrame(frame); } }
+        function off() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function (es) {
+            es.forEach(function (e) { vis = e.isIntersecting; vis ? on() : off(); });
+          }, { threshold: 0.05 }).observe(cv);
+        } else { on(); }
+        window.addEventListener('resize', function () { draw(0); }, { passive: true });
+        draw(0);
+      }
+
+      /* ---------- hero: cavitation field ---------- */
+      var hero = document.getElementById('heroField');
+      if (hero) {
+        var hb = [], r = rng(20260515);
+        for (var i = 0; i < 46; i++) {
+          hb.push({ x: r(), y: r(), s: 1.5 + r() * 4.5, sp: 0.012 + r() * 0.03, w: 0.3 + r() * 0.9, ph: r() * 6.28 });
+        }
+        var drawHero = function (t) {
+          var m = fit(hero), ctx = m.ctx, W = m.w, H = m.h;
+          ctx.clearRect(0, 0, W, H);
+          if (reduce) t = 0;
+          // expanding ultrasonic rings from lower-right
+          var cx = W * 0.72, cy = H * 0.78;
+          for (var k = 0; k < 3; k++) {
+            var p = ((t * 0.22) + k / 3) % 1; if (p < 0) p += 1;
+            ctx.beginPath();
+            ctx.arc(cx, cy, Math.max(0, p * Math.max(W, H) * 0.62), 0, 6.2832);
+            ctx.strokeStyle = 'rgba(91,185,217,' + (0.22 * (1 - p)).toFixed(3) + ')';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+          }
+          // rising micro-bubbles
+          for (var j = 0; j < hb.length; j++) {
+            var b = hb[j];
+            var y = (b.y - t * b.sp) % 1; if (y < 0) y += 1;
+            var x = b.x * W + Math.sin(t * b.w + b.ph) * 10;
+            ctx.beginPath();
+            ctx.arc(x, y * H, Math.max(0.1, b.s), 0, 6.2832);
+            ctx.fillStyle = 'rgba(91,185,217,0.16)';
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(124,197,118,0.22)';
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        };
+        if (reduce) { drawHero(0); } else { loop(hero, drawHero); }
+      }
+
+      /* ---------- process diagram ---------- */
+      var pc = document.getElementById('procCanvas');
+      if (pc) {
+        var steps = document.querySelectorAll('.hiw-step');
+        var CYCLE = 12, PH = [0, 2.4, 6.6, 9.4];   // vacuum / ultrasonic / separation / dry
+        var rp = rng(77), grime = [];
+        for (var g = 0; g < 54; g++) {
+          grime.push({ u: rp(), v: rp(), s: 1.6 + rp() * 3.2, off: rp(), drift: (rp() - 0.5) * 24 });
+        }
+        var lastStep = -1;
+        var drawProc = function (t) {
+          var m = fit(pc), ctx = m.ctx, W = m.w, H = m.h;
+          var T = reduce ? 7.5 : (Math.max(0, t) % CYCLE);
+          var phase = T < PH[1] ? 0 : T < PH[2] ? 1 : T < PH[3] ? 2 : 3;
+          if (phase !== lastStep) {
+            lastStep = phase;
+            for (var si = 0; si < steps.length; si++) steps[si].classList.toggle('on', si === phase);
+          }
+          ctx.clearRect(0, 0, W, H);
+
+          // ---- chamber ----
+          var pad = Math.max(26, W * 0.05);
+          var cw = W - pad * 2, ch = H - pad * 2, cx0 = pad, cy0 = pad;
+          var vac = phase === 0 ? Math.min(1, T / PH[1]) : 1;     // 0..1 vacuum level
+          ctx.fillStyle = 'rgba(27,63,139,' + (0.03 + 0.05 * vac).toFixed(3) + ')';
+          ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(cx0, cy0, cw, ch, 16); else ctx.rect(cx0, cy0, cw, ch);
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(27,63,139,.35)';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          // liquid level
+          var liqTop = cy0 + ch * 0.26;
+          ctx.save();
+          ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(cx0, cy0, cw, ch, 16); else ctx.rect(cx0, cy0, cw, ch);
+          ctx.clip();
+          ctx.fillStyle = 'rgba(91,185,217,.10)';
+          ctx.fillRect(cx0, liqTop, cw, ch);
+          ctx.beginPath();
+          ctx.moveTo(cx0, liqTop);
+          for (var x = 0; x <= cw; x += 6) {
+            ctx.lineTo(cx0 + x, liqTop + Math.sin((x / 46) + T * 2.2) * (phase === 1 ? 3.4 : 1.4));
+          }
+          ctx.strokeStyle = 'rgba(91,185,217,.55)';
+          ctx.lineWidth = 1.6;
+          ctx.stroke();
+
+          // ---- transducer waves (phase 1) ----
+          var baseY = cy0 + ch - 26;
+          var tds = [cx0 + cw * 0.3, cx0 + cw * 0.5, cx0 + cw * 0.7];
+          for (var ti = 0; ti < tds.length; ti++) {
+            ctx.fillStyle = 'rgba(27,63,139,.55)';
+            ctx.fillRect(tds[ti] - 16, baseY + 6, 32, 7);
+            if (phase === 1) {
+              for (var wv = 0; wv < 3; wv++) {
+                var pw = (((T - PH[1]) * 0.9) + wv / 3 + ti * 0.11) % 1; if (pw < 0) pw += 1;
+                ctx.beginPath();
+                ctx.arc(tds[ti], baseY + 6, Math.max(0, pw * ch * 0.85), Math.PI, 0);
+                ctx.strokeStyle = 'rgba(91,185,217,' + (0.5 * (1 - pw)).toFixed(3) + ')';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+              }
+            }
+          }
+
+          // ---- the part ----
+          var pw2 = cw * 0.34, ph2 = ch * 0.3;
+          var px = cx0 + cw / 2 - pw2 / 2, py = cy0 + ch * 0.44;
+          var grad = ctx.createLinearGradient(px, py, px + pw2, py + ph2);
+          grad.addColorStop(0, '#dfe7ef');
+          grad.addColorStop(0.5, '#f4f7fa');
+          grad.addColorStop(1, '#c9d6e4');
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(px, py, pw2, ph2, 10); else ctx.rect(px, py, pw2, ph2);
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(27,63,139,.35)';
+          ctx.lineWidth = 1.4;
+          ctx.stroke();
+          // bores
+          for (var bi = 0; bi < 3; bi++) {
+            ctx.beginPath();
+            ctx.arc(px + pw2 * (0.25 + bi * 0.25), py + ph2 * 0.5, Math.max(1, Math.min(14, pw2 * 0.055)), 0, 6.2832);
+            ctx.fillStyle = 'rgba(27,63,139,.12)';
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(27,63,139,.3)';
+            ctx.lineWidth = 1.2;
+            ctx.stroke();
+          }
+          // clean gleam in the last phase
+          if (phase === 3) {
+            var gk = Math.min(1, (T - PH[3]) / 1.0);
+            ctx.save();
+            ctx.beginPath();
+            if (ctx.roundRect) ctx.roundRect(px, py, pw2, ph2, 10); else ctx.rect(px, py, pw2, ph2);
+            ctx.clip();
+            var gx = px - pw2 * 0.5 + gk * pw2 * 2;
+            var gg = ctx.createLinearGradient(gx - 40, py, gx + 40, py + ph2);
+            gg.addColorStop(0, 'rgba(255,255,255,0)');
+            gg.addColorStop(0.5, 'rgba(255,255,255,.85)');
+            gg.addColorStop(1, 'rgba(255,255,255,0)');
+            ctx.fillStyle = gg;
+            ctx.fillRect(px, py, pw2, ph2);
+            ctx.restore();
+          }
+
+          // ---- contamination ----
+          for (var gi = 0; gi < grime.length; gi++) {
+            var d = grime[gi];
+            var gx0 = px + 6 + d.u * (pw2 - 12), gy0 = py + 5 + d.v * (ph2 - 10);
+            var detach = PH[1] + 0.5 + d.off * 3.4;     // when this speck lets go
+            var X = gx0, Y = gy0, a = 0.85, sc = 1;
+            if (T > detach) {
+              var age = T - detach;
+              X = gx0 + Math.sin(age * 1.7 + d.off * 6) * (8 + d.drift * 0.4) + d.drift * Math.min(1, age / 3);
+              Y = gy0 - age * (22 + d.off * 26);
+              a = Math.max(0, 0.85 - age * 0.22);
+              sc = 1 + age * 0.1;
+            }
+            if (a <= 0.01) continue;
+            if (Y < liqTop - 10) continue;
+            ctx.beginPath();
+            ctx.arc(X, Y, Math.max(0.1, d.s * sc), 0, 6.2832);
+            ctx.fillStyle = 'rgba(94,78,46,' + a.toFixed(3) + ')';
+            ctx.fill();
+          }
+          ctx.restore();
+
+          // ---- vacuum gauge ----
+          var ggx = cx0 + 42, ggy = cy0 + 42, gr = 24;
+          ctx.beginPath();
+          ctx.arc(ggx, ggy, Math.max(1, gr), Math.PI * 0.8, Math.PI * 2.2);
+          ctx.strokeStyle = 'rgba(27,63,139,.25)';
+          ctx.lineWidth = 4;
+          ctx.stroke();
+          var ang = Math.PI * 2.2 - (Math.PI * 1.4) * vac;
+          ctx.beginPath();
+          ctx.moveTo(ggx, ggy);
+          ctx.lineTo(ggx + Math.cos(ang) * (gr - 4), ggy + Math.sin(ang) * (gr - 4));
+          ctx.strokeStyle = vac > 0.92 ? GREEN : CYAN;
+          ctx.lineWidth = 2.4;
+          ctx.stroke();
+          ctx.font = '600 11px Inter, Pretendard, sans-serif';
+          ctx.fillStyle = 'rgba(95,107,122,.95)';
+          ctx.textAlign = 'center';
+          ctx.fillText('VACUUM', ggx, ggy + gr + 16);
+
+          // ---- phase caption ----
+          var caps = ['진공 감압', '초음파 캐비테이션', '오염 분리 · 배출', '진공 건조 · 청정도 확인'];
+          ctx.textAlign = 'right';
+          ctx.font = '700 13px Pretendard, Inter, sans-serif';
+          ctx.fillStyle = NAVY;
+          ctx.fillText(caps[phase], cx0 + cw - 18, cy0 + 30);
+        };
+        if (reduce) { drawProc(0); } else { loop(pc, drawProc); }
+      }
+    })();
   </script>
 </body>
 
