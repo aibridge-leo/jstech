@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>JS TECH · 제이에스테크 — 친환경 진공 초음파 세정 시스템 전문 기업</title>
+  <title>JS TECH · 제이에스테크 — 진공 초음파 세정 · 탄화수소 배출 저감 전문 기업</title>
   <meta name="description" content="JS TECH는 진공 초음파 세정 기술을 기반으로 반도체·자동차·2차전지 등 정밀 산업의 친환경·고효율 세정 솔루션을 제공합니다." />
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -400,6 +400,7 @@
       <ul class="hidden md:flex items-center gap-9 text-[14.5px] font-medium text-ink/80">
         <li><a href="#about" class="hover:text-navy transition-colors">회사소개</a></li>
         <li><a href="#process" class="hover:text-navy transition-colors">세정 원리</a></li>
+        <li><a href="#recovery" class="hover:text-navy transition-colors">탄화수소 저감</a></li>
         <li><a href="#business" class="hover:text-navy transition-colors">사업영역</a></li>
         <li><a href="#strengths" class="hover:text-navy transition-colors">핵심강점</a></li>
         <li><a href="#contact" class="hover:text-navy transition-colors">오시는 길</a></li>
@@ -451,7 +452,8 @@
           제이에스테크(JS&nbsp;TECH)는 <span class="text-ink font-semibold">진공 초음파 세정 기술</span>을 기반으로
           2차전지 및 정밀 산업 분야의 세정 솔루션을 제공합니다.
           오랜 현장 경험과 축적된 기술력을 바탕으로 친환경·고효율 세정 시스템을 설계하며,
-          고객의 품질과 생산성을 함께 향상시키는 것을 목표로 합니다.
+          세척 공정에서 발생하는 <span class="text-ink font-semibold">탄화수소 배출을 줄이고 세정제를 회수하는 설비</span>까지
+          함께 만드는 전문 기업입니다.
         </p>
 
         <!-- Static "tagged" capability chips, not buttons -->
@@ -471,6 +473,10 @@
           <li
             class="inline-flex items-center gap-2 text-[13.5px] text-ink/80 bg-white border border-line rounded-full px-3.5 py-1.5 shadow-soft">
             <span class="w-1.5 h-1.5 rounded-full bg-brand-green"></span>현장 즉응 A/S
+          </li>
+          <li
+            class="inline-flex items-center gap-2 text-[13.5px] font-semibold text-navy bg-white border border-brand-cyan/60 rounded-full px-3.5 py-1.5 shadow-soft">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-cyan"></span>탄화수소 배출 저감
           </li>
         </ul>
 
@@ -586,8 +592,9 @@
           고객의 공정에 최적화된 설비를 제작합니다.
         </p>
         <p class="reveal reveal-d3 mt-5 text-[16.5px] leading-[1.85] text-ink/85">
-          “기술로 세척하고, 신뢰로 완성합니다.” 초정밀 세정 시대에서
-          제이에스테크는 오직 정밀함과 신뢰로 고객의 가치를 잇겠습니다.
+          최근에는 세척 공정에서 발생하는 <span class="font-semibold text-navy">탄화수소(THC) 배출을 줄이는 응축 회수장치</span>를
+          직접 설계·제작해, 환경 규제 대응과 세정제 절감을 함께 해결하는 분야로 사업을 넓히고 있습니다.
+          세척기를 만드는 회사가 만들기 때문에, 배기 경로와 세척기 탱크를 하나의 흐름으로 묶을 수 있습니다.
         </p>
 
         <!-- CEO quote block -->
@@ -661,6 +668,99 @@
         </div>
       </div>
       <p class="mt-4 text-[12.5px] text-muted">※ 위 도식은 공정 이해를 돕기 위한 개념도이며, 실제 설비 구성은 고객 공정에 따라 달라집니다.</p>
+    </div>
+  </section>
+
+
+  <!-- ============ Hydrocarbon recovery (new business) ============ -->
+  <section id="recovery" data-screen-label="04 Recovery" class="section bg-white relative overflow-hidden">
+    <div class="relative max-w-[1240px] mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-12 gap-10 items-end">
+        <div class="lg:col-span-7">
+          <div class="reveal flex items-center gap-3 text-[12.5px] tracking-[.18em] uppercase text-muted">
+            <span class="hairline-gradient inline-block w-10 h-[2px] rounded-full"></span>
+            Emission Control · New
+          </div>
+          <h2
+            class="reveal reveal-d1 wsplit mt-4 text-[clamp(28px,3.4vw,44px)] leading-[1.18] tracking-[-0.015em] font-extrabold text-navy">
+            배출은 줄이고,<br />세정제는 되돌려 받습니다.
+          </h2>
+        </div>
+        <p class="reveal reveal-d2 lg:col-span-5 text-[15.5px] leading-[1.85] text-muted">
+          배출구로 빠져나가던 세정제 증기를 진공으로 끌어와 두 번 응축시켜,
+          탄화수소 배출을 낮추고 모인 세정제를 세척기로 되돌려 보내는 설비입니다.
+        </p>
+      </div>
+
+      <div class="reveal reveal-d1 mt-12 bg-mist border border-line rounded-2xl overflow-hidden">
+        <canvas id="recCanvas" class="block w-full" style="height:clamp(300px,34vw,420px)"></canvas>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6 px-6 sm:px-8 pb-8 pt-2 text-[14px]">
+          <div class="hiw-step" data-rstep="0">
+            <div class="text-[12px] tracking-[.2em] uppercase"><span class="num">01</span> &nbsp;Suction</div>
+            <div class="mt-1.5 font-semibold text-[15px]">증기 흡입</div>
+            <p class="mt-1 text-[13.5px] leading-[1.7] text-muted">진공펌프가 세척기에서 발생한 세정제 증기를 끌어옵니다</p>
+          </div>
+          <div class="hiw-step" data-rstep="1">
+            <div class="text-[12px] tracking-[.2em] uppercase"><span class="num">02</span> &nbsp;Condense</div>
+            <div class="mt-1.5 font-semibold text-[15px]">2단 응축</div>
+            <p class="mt-1 text-[13.5px] leading-[1.7] text-muted">1차·2차 열교환기를 거치며 증기가 액체로 바뀝니다</p>
+          </div>
+          <div class="hiw-step" data-rstep="2">
+            <div class="text-[12px] tracking-[.2em] uppercase"><span class="num">03</span> &nbsp;Collect</div>
+            <div class="mt-1.5 font-semibold text-[15px]">리시버탱크 저장</div>
+            <p class="mt-1 text-[13.5px] leading-[1.7] text-muted">응축된 세정제가 탱크에 모이고 센서가 수위를 감지합니다</p>
+          </div>
+          <div class="hiw-step" data-rstep="3">
+            <div class="text-[12px] tracking-[.2em] uppercase"><span class="num">04</span> &nbsp;Return</div>
+            <div class="mt-1.5 font-semibold text-[15px]">세척기로 이송</div>
+            <p class="mt-1 text-[13.5px] leading-[1.7] text-muted">펌프로 메인 세척기 더티탱크에 세정제를 되돌려 보냅니다</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-10 grid lg:grid-cols-12 gap-6">
+        <div class="reveal reveal-d1 lg:col-span-7 grid grid-cols-2 gap-px bg-line rounded-2xl overflow-hidden border border-line">
+          <div class="bg-white p-7">
+            <div class="text-[12px] tracking-[.2em] uppercase text-muted">설치 전</div>
+            <div class="font-num text-[44px] font-extrabold leading-none mt-2" style="color:#C2410C"
+              data-count="400" data-suffix="ppm">0<span class="text-[26px]">ppm</span></div>
+            <div class="mt-2 text-[13.5px] text-muted">세척기 배출구 측정값</div>
+          </div>
+          <div class="bg-white p-7">
+            <div class="text-[12px] tracking-[.2em] uppercase text-muted">설치 후</div>
+            <div class="font-num text-[44px] font-extrabold text-navy leading-none mt-2"
+              data-count="40" data-suffix="ppm">0<span class="text-grad text-[26px]">ppm</span></div>
+            <div class="mt-2 text-[13.5px] text-muted">배출 허용 기준 200ppm의 1/5 수준</div>
+          </div>
+          <div class="bg-white p-7">
+            <div class="text-[12px] tracking-[.2em] uppercase text-muted">회수 세정제 순도</div>
+            <div class="font-num text-[44px] font-extrabold text-navy leading-none mt-2"
+              data-count="99" data-suffix="%+">0<span class="text-grad text-[26px]">%+</span></div>
+            <div class="mt-2 text-[13.5px] text-muted">응축되어 다시 모인 세정제</div>
+          </div>
+          <div class="bg-white p-7">
+            <div class="text-[12px] tracking-[.2em] uppercase text-muted">월 회수량</div>
+            <div class="font-num text-[44px] font-extrabold text-navy leading-none mt-2"
+              data-count="200" data-suffix="L">0<span class="text-grad text-[26px]">L</span></div>
+            <div class="mt-2 text-[13.5px] text-muted">9시간 가동 시 약 10L · 한 달 기준</div>
+          </div>
+        </div>
+
+        <div class="reveal reveal-d2 lg:col-span-5 rounded-2xl overflow-hidden border border-line relative scan-host"
+          data-scan-once="1">
+          <img src="assets/recovery-unit.jpg" alt="탄화수소 응축 회수장치" class="block w-full h-full min-h-[320px] object-cover" loading="lazy" />
+          <div class="scan-line" aria-hidden="true"></div>
+          <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-navy/40 via-transparent to-transparent"></div>
+          <div class="absolute bottom-4 left-5 right-5 text-white">
+            <div class="text-[11px] tracking-[.22em] uppercase opacity-80">Condensing Recovery Unit</div>
+            <div class="font-semibold text-[15px] mt-1">세척기와 한 흐름으로 묶이는 응축 회수장치</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="mt-5 text-[12.5px] text-muted">
+        ※ 수치는 자동차 부품 제조 A사 현장의 측정·운전 결과이며, 공정과 가동 조건에 따라 달라질 수 있습니다. 위 도식과 이미지는 이해를 돕기 위한 개념 자료입니다.
+      </p>
     </div>
   </section>
 
@@ -1125,6 +1225,7 @@
         <ul class="mt-4 space-y-2 text-[14px]">
           <li><a href="#about" class="text-white/85 hover:text-white">회사소개</a></li>
           <li><a href="#process" class="text-white/85 hover:text-white">세정 원리</a></li>
+          <li><a href="#recovery" class="text-white/85 hover:text-white">탄화수소 저감</a></li>
           <li><a href="#business" class="text-white/85 hover:text-white">사업영역</a></li>
           <li><a href="#strengths" class="text-white/85 hover:text-white">핵심강점</a></li>
           <li><a href="#contact" class="text-white/85 hover:text-white">오시는 길</a></li>
@@ -1340,6 +1441,143 @@
           }
         };
         if (reduce) { drawHero(0); } else { loop(hero, drawHero); }
+      }
+
+
+      /* ---------- recovery flow diagram ---------- */
+      var rc = document.getElementById('recCanvas');
+      if (rc) {
+        var rsteps = document.querySelectorAll('[data-rstep]');
+        var RC_CYCLE = 12, RP = [0, 2.6, 6.2, 9.0];
+        var rr = rng(4242), vap = [];
+        for (var v = 0; v < 70; v++) vap.push({ o: rr(), j: rr(), s: 2 + rr() * 3 });
+        var lastR = -1;
+        var drawRec = function (t) {
+          var m = fit(rc), ctx = m.ctx, W = m.w, H = m.h;
+          var T = reduce ? 7.0 : (Math.max(0, t) % RC_CYCLE);
+          var ph = T < RP[1] ? 0 : T < RP[2] ? 1 : T < RP[3] ? 2 : 3;
+          if (ph !== lastR) { lastR = ph; for (var i = 0; i < rsteps.length; i++) rsteps[i].classList.toggle('on', i === ph); }
+          ctx.clearRect(0, 0, W, H);
+
+          var pad = Math.max(22, W * 0.035);
+          var baseY = H - pad - 48;
+          var boxH = Math.min(118, H * 0.3);
+          var wW = Math.max(150, W * 0.17), uW = Math.max(150, W * 0.19), tW = Math.max(110, W * 0.13);
+          var wX = pad, uX = pad + wW + Math.max(60, W * 0.1), tX = uX + uW + Math.max(50, W * 0.08);
+          var boxY = baseY - boxH;
+
+          function rbox(x, y, w, h, label, sub, key) {
+            ctx.beginPath();
+            if (ctx.roundRect) ctx.roundRect(x, y, w, h, 8); else ctx.rect(x, y, w, h);
+            ctx.fillStyle = key ? '#eef8fc' : '#ffffff';
+            ctx.fill();
+            ctx.strokeStyle = key ? CYAN : 'rgba(27,63,139,.4)';
+            ctx.lineWidth = key ? 2.2 : 1.4;
+            ctx.stroke();
+            ctx.textAlign = 'center';
+            ctx.fillStyle = NAVY;
+            ctx.font = '700 15px Pretendard, Inter, sans-serif';
+            ctx.fillText(label, x + w / 2, y + h / 2 - 2);
+            ctx.fillStyle = 'rgba(95,107,122,.95)';
+            ctx.font = '600 10px Inter, sans-serif';
+            ctx.fillText(sub, x + w / 2, y + h / 2 + 16);
+          }
+
+          /* exhaust stack above the washer */
+          var stX = wX + wW / 2;
+          ctx.strokeStyle = 'rgba(27,63,139,.35)';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(stX - 16, pad + 6, 32, boxY - pad - 10);
+
+          /* escaping vapour (phase 0 only) */
+          if (ph === 0) {
+            for (var a = 0; a < vap.length; a += 2) {
+              var p0 = vap[a], y0 = (p0.o - T * 0.4) % 1; if (y0 < 0) y0 += 1;
+              ctx.beginPath();
+              ctx.arc(stX + Math.sin(T * 1.6 + p0.j * 6) * 9, pad + 8 + y0 * (boxY - pad), p0.s, 0, 6.2832);
+              ctx.fillStyle = 'rgba(120,130,145,' + (0.42 * (1 - y0)).toFixed(3) + ')';
+              ctx.fill();
+            }
+          }
+
+          /* pipe washer -> unit -> tank */
+          ctx.strokeStyle = 'rgba(27,63,139,.3)';
+          ctx.lineWidth = 10;
+          ctx.beginPath();
+          ctx.moveTo(wX + wW, boxY + boxH * 0.42);
+          ctx.lineTo(uX, boxY + boxH * 0.42);
+          ctx.moveTo(uX + uW, boxY + boxH * 0.42);
+          ctx.lineTo(tX, boxY + boxH * 0.42);
+          ctx.stroke();
+
+          /* travelling vapour / droplets */
+          if (ph >= 1) {
+            var seg = (tX) - (wX + wW);
+            for (var b = 0; b < vap.length; b++) {
+              var p = vap[b];
+              var prog = ((T - RP[1]) * 0.26 + p.o) % 1; if (prog < 0) prog += 1;
+              var x = wX + wW + prog * seg;
+              var cond = x > uX;                       // after the unit it is liquid
+              var y = boxY + boxH * 0.42 + Math.sin(prog * 12 + p.j * 6) * (cond ? 1.5 : 4);
+              ctx.beginPath();
+              ctx.arc(x, y, cond ? 3 : p.s, 0, 6.2832);
+              ctx.fillStyle = cond ? 'rgba(91,185,217,.95)' : 'rgba(140,150,165,.6)';
+              ctx.fill();
+            }
+          }
+
+          rbox(wX, boxY, wW, boxH, '메인 세척기', 'MAIN WASHER', false);
+          rbox(uX, boxY, uW, boxH, '응축 회수장치', 'CONDENSER UNIT', ph >= 1);
+          rbox(tX, boxY, tW, boxH, '리시버탱크', 'RECEIVER', ph >= 2);
+
+          /* tank fill */
+          var fill = ph < 2 ? 0 : Math.min(1, (T - RP[2]) / 2.2);
+          if (ph === 3) fill = Math.max(0.25, 1 - (T - RP[3]) / 2.4);
+          ctx.save();
+          ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(tX + 6, boxY + 6, tW - 12, boxH - 12, 5); else ctx.rect(tX + 6, boxY + 6, tW - 12, boxH - 12);
+          ctx.clip();
+          ctx.fillStyle = 'rgba(91,185,217,.35)';
+          ctx.fillRect(tX + 6, boxY + boxH - 6 - (boxH - 12) * fill, tW - 12, (boxH - 12) * fill);
+          ctx.restore();
+
+          /* return line */
+          var ry = baseY + 26;
+          ctx.strokeStyle = ph === 3 ? CYAN : 'rgba(27,63,139,.18)';
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.moveTo(tX + tW / 2, baseY);
+          ctx.lineTo(tX + tW / 2, ry);
+          ctx.lineTo(wX + wW / 2, ry);
+          ctx.lineTo(wX + wW / 2, baseY);
+          ctx.stroke();
+          if (ph === 3) {
+            var rp2 = Math.min(1, (T - RP[3]) / 2.0);
+            var rxx = tX + tW / 2 - rp2 * (tX + tW / 2 - (wX + wW / 2));
+            ctx.beginPath();
+            ctx.arc(rxx, ry, 5, 0, 6.2832);
+            ctx.fillStyle = CYAN;
+            ctx.fill();
+            ctx.textAlign = 'center';
+            ctx.fillStyle = NAVY;
+            ctx.font = '700 12px Pretendard, Inter, sans-serif';
+            ctx.fillText('세정제 회수 · 재사용', (tX + wX + wW) / 2, ry + 20);
+          }
+
+          /* ppm readout */
+          var val = ph === 0 ? 400 : ph === 1 ? 400 - 360 * Math.min(1, (T - RP[1]) / 2.4) : 40;
+          ctx.textAlign = 'right';
+          ctx.font = '800 11px Inter, sans-serif';
+          ctx.fillStyle = 'rgba(95,107,122,.95)';
+          ctx.fillText('THC · 배출단 측정', W - pad, pad + 16);
+          ctx.font = '800 40px Inter, sans-serif';
+          ctx.fillStyle = val > 200 ? '#C2410C' : NAVY;
+          ctx.fillText(Math.round(val) + ' ppm', W - pad, pad + 58);
+          ctx.font = '600 11px Inter, sans-serif';
+          ctx.fillStyle = 'rgba(95,107,122,.9)';
+          ctx.fillText('기준 200 ppm 이하', W - pad, pad + 78);
+        };
+        if (reduce) { drawRec(0); } else { loop(rc, drawRec); }
       }
 
       /* ---------- process diagram ---------- */
